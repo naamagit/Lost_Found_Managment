@@ -1,0 +1,50 @@
+package lostandfound.lostitem;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class LostItemService {
+	@Autowired
+	private LostItemRepository lostItemRepository;
+
+	public List<LostItem> getAllLostItems() {
+		List<LostItem> lostItems = new ArrayList<>();
+		// convert into a list
+		lostItemRepository.findAll().forEach(lostItems::add);
+		return lostItems;
+	}
+
+	public List<LostItem> getLostItemByType(int itemType) {
+		List<LostItem> lostItems = new ArrayList<>();
+		lostItemRepository.findByItemItemType(itemType).forEach(lostItems::add);
+		return lostItems;
+	}
+    
+	public LostItem getLostItemByTypeAndId(int itemType, String itemId) {
+		return lostItemRepository.findByItemItemTypeAndItemId(itemType, itemId);
+	}
+	
+	public List<LostItem> getLostItemByUser(String userId) {
+		List<LostItem> lostItems = new ArrayList<>();
+		lostItemRepository.findByUserUserId(userId).forEach(lostItems::add);
+		return lostItems;	
+	}
+	public void addLostItem(LostItem lostItem) {
+		lostItemRepository.save(lostItem);
+	}
+
+	public void updateLostItem(long id, LostItem lostItem) {
+		lostItemRepository.save(lostItem);
+	}
+
+	public void deleteLostItem(long id) {
+		lostItemRepository.deleteById(id);
+	}
+
+	
+}

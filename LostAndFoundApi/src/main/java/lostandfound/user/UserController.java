@@ -1,0 +1,62 @@
+package lostandfound.user;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class UserController {
+	@Autowired
+	private UserService userService;
+
+	@RequestMapping("/users")
+	public List<User> getAllUsers() {
+		return userService.getAllUsers();
+	}
+
+	@RequestMapping("/users/{userId}")
+	public User getUser(@PathVariable String userId) {
+		// check the the id is not null . if yes return error message
+		return userService.getUser(userId);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/users")
+	public ResponseEntity<?> addUser(@RequestBody User user) {
+		try {
+			userService.addUser(user);
+		} catch (Exception e) {
+			return new ResponseEntity<>("User " + user.getUserId() + " could not be created ",
+					HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		return new ResponseEntity<>("User " + user.getUserId() + " created successfully", HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.PUT, value = "/users/{userId}")
+	public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable String userId) {
+		try {
+			userService.updateUser(userId, user);
+		} catch (Exception ex) {
+			return new ResponseEntity<>("User " + userId + " could not be updated ", HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		return new ResponseEntity<>("User " + userId + " updated successfully", HttpStatus.OK);
+
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE, value = "/users/{userId}")
+	public ResponseEntity<?> deleteUser(@PathVariable String userId) {
+		try {
+			userService.deleteUser(userId);
+		} catch (Exception ex) {
+			return new ResponseEntity<>("User " + userId + " could not be deleted ", HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		return new ResponseEntity<>("User " + userId + " deleted successfully", HttpStatus.OK);
+	}
+
+}
