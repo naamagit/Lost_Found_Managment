@@ -1,4 +1,4 @@
-package lostandfound.excpetion;
+package lostandfound.exception;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
 	// Let Spring BasicErrorController handle the exception, we just override the
 	// status code
-	@ExceptionHandler(NoDataFoundExcpetion.class)
+	@ExceptionHandler(NoDataFoundException.class)
 	public void springHandleNotFound(HttpServletResponse response) throws IOException {
 		response.sendError(HttpStatus.NOT_FOUND.value());
 	}

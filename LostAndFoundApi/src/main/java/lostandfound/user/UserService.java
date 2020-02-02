@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import lostandfound.excpetion.NoDataFoundExcpetion;
+import lostandfound.exception.NoDataFoundException;
 
 @Service
 public class UserService {
@@ -22,7 +22,7 @@ public class UserService {
 	}
 
 	public User getUser(String userId) {
-		return userRepository.findById(userId).orElseThrow(() -> new NoDataFoundExcpetion(userId));
+		return userRepository.findById(userId).orElseThrow(() -> new NoDataFoundException(userId));
 	}
 
 	public void addUser(User user) {
@@ -33,7 +33,7 @@ public class UserService {
 		try {
 			userRepository.save(user);
 		} catch (DataAccessException ex) {
-			throw new NoDataFoundExcpetion(ex.getCause().getMessage());
+			throw new NoDataFoundException(ex.getCause().getMessage());
 		}
 	}
 

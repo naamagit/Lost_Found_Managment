@@ -23,7 +23,6 @@ public class UserController {
 
 	@RequestMapping("/users/{userId}")
 	public User getUser(@PathVariable String userId) {
-		// check the the id is not null . if yes return error message
 		return userService.getUser(userId);
 	}
 

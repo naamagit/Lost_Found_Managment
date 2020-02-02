@@ -6,7 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lostandfound.excpetion.NoDataFoundExcpetion;
+import lostandfound.exception.NoDataFoundException;
+
 
 @Service
 public class ItemService {
@@ -21,7 +22,7 @@ public class ItemService {
 	}
 
 	public Item getItem(int itemType) {
-		return itemRepository.findById(itemType).orElseThrow(() -> new NoDataFoundExcpetion(itemType));
+		return itemRepository.findById(itemType).orElseThrow(() -> new NoDataFoundException(itemType));
 	}
 
 	public void addItem(Item item) {

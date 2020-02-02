@@ -1,4 +1,4 @@
-package lostandfound.excpetion;
+package lostandfound.exception;
 
 public class InvalidRequest extends Exception {
 
